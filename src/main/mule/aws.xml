@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:s3="http://www.mulesoft.org/schema/mule/s3" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="3903182d-25ce-4a81-8b4e-bc5b541a1239" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<s3:config name="Amazon_S3_Configuration" doc:name="Amazon S3 Configuration" doc:id="f37270b4-b819-41af-848b-3adeaa64a317" >
+		<s3:connection region="sa-east-1" accessKey="AKIAQ6DJB4X3FE77J3EG" secretKey="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" />
+	</s3:config>
+	<flow name="awsFlow" doc:id="4b15f5e4-4ee4-4f12-9769-e2897b645b0b" >
+		<http:listener doc:name="Listener" doc:id="43141980-7fee-4c97-a7dc-37434c5f9037" config-ref="HTTP_Listener_config" path="/aws"/>
+		<s3:create-bucket doc:name="Create Bucket" doc:id="3edfbf79-ff9e-48d3-af14-efef8a712522" config-ref="Amazon_S3_Configuration" bucketName="pavanipulikam.techbulls"/>
+		<set-payload value="bucket created" doc:name="Set Payload" doc:id="faa33293-46cb-47d9-b5d1-9a44c96b7038" />
+	</flow>
+</mule>
